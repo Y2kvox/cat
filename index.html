@@ -10,8 +10,8 @@
 <body>
     <div class="wrapper">
         <img src="cat.png" alt="Blob Cat" class="centered-cat">
-        <button id="btn" onclick="document.getElementById('operaAudio').play()">Sing</button>
-        <audio id="operaAudio" src="her_opera.wav" hidden></audio>
+        <button id="btn">Sing</button>
+        <audio id="operaAudio" src="her_opera.wav" preload="auto" hidden></audio>
         <div class="happiness-meter">
             <div class="happiness-fill"></div>
         </div>
@@ -23,9 +23,16 @@
             const cat = document.querySelector('.centered-cat');
             const btn = document.getElementById('btn');
             const happinessFill = document.querySelector('.happiness-fill');
+            const audio = document.getElementById('operaAudio');
             let currentHappiness = 0;
 
             btn.addEventListener('click', () => {
+                // Reset and play audio immediately
+                audio.currentTime = 0; // Start from beginning
+                audio.play().catch(error => {
+                    console.log("Audio play failed:", error);
+                });
+
                 // Calculate new happiness level (increase by 25%, max 100%)
                 const targetHappiness = Math.min(currentHappiness + 25, 100);
                 
@@ -40,12 +47,12 @@
                 btn.style.opacity = '0.5';
                 btn.style.cursor = 'not-allowed';
 
-                // Re-enable button after 5 seconds
+                // Re-enable button after 6 seconds
                 setTimeout(() => {
                     btn.disabled = false;
                     btn.style.opacity = '1';
                     btn.style.cursor = 'pointer';
-                }, 5000);
+                }, 6000);
 
                 // Trigger pop animation
                 cat.classList.add('pop-animation');
