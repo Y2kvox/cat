@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusra's Blob Cat</title>
+</head>
+<body>
+    <div class="wrapper">
+        <img src="cat.png" alt="Blob Cat" class="centered-cat">
+        <button id="btn" onclick="document.getElementById('operaAudio').play()">Sing</button>
+        <audio id="operaAudio" src="her_opera.wav" hidden></audio>
+        <div class="happiness-meter">
+            <div class="happiness-fill"></div>
+        </div>
+        <div class="happiness-label">Happiness Meter</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cat = document.querySelector('.centered-cat');
+            const btn = document.getElementById('btn');
+            const happinessFill = document.querySelector('.happiness-fill');
+            let currentHappiness = 0;
+
+            btn.addEventListener('click', () => {
+                // Calculate new happiness level (increase by 25%, max 100%)
+                const targetHappiness = Math.min(currentHappiness + 25, 100);
+                
+                // Update happiness meter width
+                happinessFill.style.width = `${targetHappiness}%`;
+                
+                // Update current happiness
+                currentHappiness = targetHappiness;
+
+                // Disable button during animation
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+
+                // Re-enable button after 5 seconds
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                }, 5000);
+
+                // Trigger pop animation
+                cat.classList.add('pop-animation');
+                cat.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'pop') {
+                        cat.classList.remove('pop-animation');
+                    }
+                }, { once: true });
+
+                // Trigger dance animation
+                cat.classList.add('dance-animation');
+                cat.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'dance') {
+                        cat.classList.remove('dance-animation');
+                    }
+                }, { once: true });
+
+                // Generate confetti
+                for (let i = 0; i < 30; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.backgroundColor = getRandomColor();
+                    confetti.style.left = (window.innerWidth / 2 + (Math.random() * 100 - 50)) + 'px';
+                    confetti.style.top = (window.innerHeight / 2 - 100) + 'px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 1000);
+                }
+            });
+
+            function getRandomColor() {
+                const colors = ['red', 'yellow', 'blue', 'green', 'pink', 'purple', 'orange'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+        });
+    </script>
+</body>
+</html>
