@@ -1,94 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusra's Blob Cat</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maze</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <img src="cat.png" alt="Blob Cat" class="centered-cat">
-        <button id="btn">Sing</button>
-        <audio id="operaAudio" src="her_opera.wav" preload="auto" hidden></audio>
-        <div class="happiness-meter">
-            <div class="happiness-fill"></div>
-        </div>
-        <div class="happiness-label">Happiness Meter</div>
+
+  <div id="page">
+
+    <div id="Message-Container">
+      <div id="message">
+        <h1>Congratulations!</h1>
+        <p>You are done.</p>
+        <p id="moves"></p>
+        <input id="okBtn" type="button" onclick="toggleVisablity('Message-Container')" value="Cool!" />
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cat = document.querySelector('.centered-cat');
-            const btn = document.getElementById('btn');
-            const happinessFill = document.querySelector('.happiness-fill');
-            const audio = document.getElementById('operaAudio');
-            let currentHappiness = 0;
+    <br>
+    <div id="menu">
+      <div class="custom-select">
+        <select id="diffSelect">
+                  <option value="10">Easy</option>
+                  <option value="15">Medium</option>
+                  <option value="25">Hard</option>
+                  <option value="38">Extreme</option>                                      
+              </select>
+      </div>
+      <input id="startMazeBtn" type="button" onclick="makeMaze()" value="Start" />
+    </div>
 
-            btn.addEventListener('click', () => {
-                // Reset and play audio immediately
-                audio.currentTime = 0; // Start from beginning
-                audio.play().catch(error => {
-                    console.log("Audio play failed:", error);
-                });
+    <div id="view">
+      <div id="mazeContainer">
+        <canvas id="mazeCanvas" class="border" height="1100" width="1100"></canvas>
+      </div>
+    </div>
 
-                // Calculate new happiness level (increase by 25%, max 100%)
-                const targetHappiness = Math.min(currentHappiness + 25, 100);
-                
-                // Update happiness meter width
-                happinessFill.style.width = `${targetHappiness}%`;
-                
-                // Update current happiness
-                currentHappiness = targetHappiness;
+    <p id="instructions">Use arrow keys to move the cat!</p>
+  </div>
 
-                // Disable button during animation
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
-                btn.style.cursor = 'not-allowed';
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>
+  
+  <script src="./script.js"></script>
 
-                // Re-enable button after 6 seconds
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                    btn.style.cursor = 'pointer';
-                }, 6000);
-
-                // Trigger pop animation
-                cat.classList.add('pop-animation');
-                cat.addEventListener('animationend', (event) => {
-                    if (event.animationName === 'pop') {
-                        cat.classList.remove('pop-animation');
-                    }
-                }, { once: true });
-
-                // Trigger dance animation
-                cat.classList.add('dance-animation');
-                cat.addEventListener('animationend', (event) => {
-                    if (event.animationName === 'dance') {
-                        cat.classList.remove('dance-animation');
-                    }
-                }, { once: true });
-
-                // Generate confetti
-                for (let i = 0; i < 30; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.classList.add('confetti');
-                    confetti.style.backgroundColor = getRandomColor();
-                    confetti.style.left = (window.innerWidth / 2 + (Math.random() * 100 - 50)) + 'px';
-                    confetti.style.top = (window.innerHeight / 2 - 100) + 'px';
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    document.body.appendChild(confetti);
-
-                    setTimeout(() => confetti.remove(), 1000);
-                }
-            });
-
-            function getRandomColor() {
-                const colors = ['red', 'yellow', 'blue', 'green', 'pink', 'purple', 'orange'];
-                return colors[Math.floor(Math.random() * colors.length)];
-            }
-        });
-    </script>
+  <audio id="bg-music" autoplay loop>
+    <source src="her_opera.wav" type="audio/wav">
+    Your browser does not support the audio element.
+  </audio>
+  
 </body>
 </html>
