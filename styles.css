@@ -1,0 +1,115 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: beige;
+}
+
+.centered-cat {
+    width: 300px;
+    height: 300px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn {
+    width: 150px;
+    height: 70px;
+    font-size: 2em;
+    letter-spacing: 3px;
+    border: 3px solid black;
+    background-color: blanchedalmond;
+    color: black;
+    margin-top: 40px;
+    user-select: none;
+    border-radius: 30px;
+}
+
+#btn:hover {
+    background-color: black;
+    color: blanchedalmond;
+    cursor: pointer;
+}
+
+#btn:disabled {
+    background-color: gray;
+    color: white;
+    border-color: gray;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#btn:focus {
+    outline: none;
+}
+
+/* Happiness Meter Styles */
+.happiness-meter {
+    width: 200px;
+    height: 20px;
+    background-color: #ddd;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.happiness-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #ff69b4; /* Pink fill */
+    transition: width 5s linear; /* Animate width over 5 seconds */
+}
+
+/* Happiness Label */
+.happiness-label {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+    color: black;
+}
+
+/* Animation Keyframes */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes dance {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+.pop-animation {
+    animation: pop 0.5s ease-in-out;
+}
+
+.dance-animation {
+    animation: dance 1s ease-in-out 5; /* 5 cycles of 1s = 5s total */
+}
+
+/* Confetti Styles */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    animation: fall 1s linear forwards;
+    z-index: 999;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(500px) rotate(720deg);
+        opacity: 0;
+    }
+}
